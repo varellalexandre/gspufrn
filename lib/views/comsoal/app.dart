@@ -8,7 +8,9 @@ class Comsoal extends StatelessWidget{
 		return Scaffold(
 			appBar:NavBar(),
 			body:Stack(
-				children:[Vertex(x:100,y:0.4)],
+				children:[
+					Vertex(x:0.5,y:0.5)
+				],
 			)
 		);
 	}

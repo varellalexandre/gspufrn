@@ -12,8 +12,8 @@ class Vertex extends StatelessWidget{
 	@override
 	Widget build(BuildContext context){
 		return Positioned(
-			left:x,
-			top:y,
+			left:MediaQuery.of(context).size.width*x,
+			top:MediaQuery.of(context).size.height*y,
 			child:Text('Aqui'),
 		);
 	}
