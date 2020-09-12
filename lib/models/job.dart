@@ -5,6 +5,15 @@ class Job extends Model{
 	num x;
 	num y;
 	String nome;
+
+	void updateNome(String nome){
+		this.nome = nome;
+	}
+
+	void updateTempo(num tempo){
+		this.tempo = tempo;
+	}
+
 	Job({
 		this.tempo,
 		this.x,

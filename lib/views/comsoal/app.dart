@@ -24,7 +24,7 @@ class Comsoal extends StatelessWidget{
 						Expanded(
 							flex:2,
 							child:GridView.count(
-								crossAxisCount:2,
+								crossAxisCount:1,
 								children:[
 									Vertex(model:test_model),
 									Vertex(model:test_model),

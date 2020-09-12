@@ -12,8 +12,18 @@ class Vertex extends StatelessWidget{
 		this.model
 	});
 
+	_updateTempo(){
+		model.updateTempo(num.parse(tempo_controller.text));
+	}
+	_updateNome(){
+		model.updateNome(nome_controller.text);
+	}
+
+
 	@override
 	Widget build(BuildContext context){
+		tempo_controller.addListener(_updateTempo);
+		nome_controller.addListener(_updateNome);
 		return ScopedModel<Job>(
 			model:model,
 			child:ScopedModelDescendant<Job>(

@@ -19,9 +19,8 @@ class editable extends StatefulWidget{
 		controller:controller,
 		numeric:numeric,
 	);
-
-
 }
+
 class _editableState extends State<editable>{
 	bool beingEdited;
 	TextEditingController controller;
@@ -71,6 +70,7 @@ class _editableState extends State<editable>{
 								icon:icone,
 								onPressed:(){
 									setState((){
+										controller.notifyListeners();
 										beingEdited = !beingEdited;
 									});
 								}
