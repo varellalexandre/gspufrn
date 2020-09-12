@@ -14,51 +14,62 @@ class Vertex extends StatelessWidget{
 
 	@override
 	Widget build(BuildContext context){
-		tempo_controller.text = "${model.tempo}";
-		nome_controller.text = model.nome;
-		return Container(
-			child:Card(
-				color:Color(0xFFFFF2AA),
-				child:Padding(
-					padding:EdgeInsets.all(5.0),
-					child:Container(
-						child:AspectRatio(
-							aspectRatio:4/2,
-							child:Row(
-								children:[
-									Expanded(
-										flex:1,
-										child:FittedBox(
-											fit:BoxFit.fitHeight,
-											child:Icon(Icons.remove)
-										)
-									),
-									Expanded(
-										flex:5,
-										child:Column(
+		return ScopedModel<Job>(
+			model:model,
+			child:ScopedModelDescendant<Job>(
+				builder:(context,child,model){
+					tempo_controller.text = "${model.tempo}";
+					nome_controller.text = model.nome;
+					return Container(
+						child:Card(
+							color:Color(0xFFFFF2AA),
+							child:Padding(
+								padding:EdgeInsets.all(5.0),
+								child:Container(
+									child:AspectRatio(
+										aspectRatio:4/2,
+										child:Row(
 											children:[
 												Expanded(
 													flex:1,
-													child:editable(
-														beingEdited:false,
-														controller:nome_controller,
+													child:Align(
+														alignment:Alignment.topCenter,
+														child:FittedBox(
+															fit:BoxFit.scaleDown,
+															child:Icon(Icons.remove)
+														)
 													)
 												),
 												Expanded(
-													flex:1,
-													child:editable(
-														beingEdited:true,
-														controller:tempo_controller,
+													flex:9,
+													child:Column(
+														children:[
+															Expanded(
+																flex:1,
+																child:editable(
+																	beingEdited:false,
+																	controller:nome_controller,
+																)
+															),
+															Expanded(
+																flex:1,
+																child:editable(
+																	beingEdited:true,
+																	controller:tempo_controller,
+																	numeric:true,
+																)
+															)
+														]
 													)
 												)
 											]
 										)
 									)
-								]
+								)
 							)
 						)
-					)
-				)
+					);
+				}
 			)
 		);
 	}
