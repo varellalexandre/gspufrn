@@ -9,6 +9,7 @@ PreferredSizeWidget NavBar(){
 				color:Color(0xFF554800),
 			)
 		),
+		iconTheme: IconThemeData(color:Color(0xFF554800)),
 		backgroundColor:Color(0xFFFFF2AA),
 		actions:[
 			Image(image:AssetImage('images/ufrn.png')),

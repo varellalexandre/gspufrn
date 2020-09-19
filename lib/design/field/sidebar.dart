@@ -4,32 +4,36 @@ import 'package:gspufrn/models/job.dart';
 
 class sidebar extends StatelessWidget{
 
+
+
 	@override
 	Widget build(BuildContext context){
-		Job test_model = Job(
-			tempo:0.5,
-			x:0.5,
-			y:0.5,
-			nome:'Doidera'
+		Linha exemplo = get_example();
+		List<Vertex> children_list = List<Vertex>();
+
+		exemplo.atividades.forEach(
+			(atividade)=>children_list.add(
+				Vertex(model:atividade)
+			)
 		);
+		exemplo.calculateComsoal();
 		return Drawer(
 			child:Container(
-				child:GridView.count(
-					crossAxisCount:1,
+				child:Column(
 					children:[
-						Vertex(model:test_model),
-						Vertex(model:test_model),
-						Vertex(model:test_model),
-						Vertex(model:test_model),
-						Vertex(model:test_model),
-						Vertex(model:test_model),
-						Vertex(model:test_model),
-						Vertex(model:test_model),
-						Vertex(model:test_model),
-						Vertex(model:test_model),
-						Vertex(model:test_model),
-						Vertex(model:test_model),
+						Expanded(
+							flex:3,
+							child:Container(),
+						),
+						Expanded(
+							flex:7,
+							child:GridView.count(
+								crossAxisCount:1,
+								children:children_list,
+							)
+						),
 					]
+
 				)
 			)
 		);

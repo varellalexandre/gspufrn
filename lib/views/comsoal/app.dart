@@ -11,12 +11,6 @@ class Comsoal extends StatelessWidget{
 
 	@override
 	Widget build(BuildContext context){
-		Job test_model = Job(
-			tempo:0.5,
-			x:0.5,
-			y:0.5,
-			nome:'Doidera'
-		);
 		return Scaffold(
 			appBar:NavBar(),
 			drawer:sidebar(),
@@ -25,23 +19,7 @@ class Comsoal extends StatelessWidget{
 					children:[
 						Expanded(
 							flex:2,
-							child:GridView.count(
-								crossAxisCount:1,
-								children:[
-									Vertex(model:test_model),
-									Vertex(model:test_model),
-									Vertex(model:test_model),
-									Vertex(model:test_model),
-									Vertex(model:test_model),
-									Vertex(model:test_model),
-									Vertex(model:test_model),
-									Vertex(model:test_model),
-									Vertex(model:test_model),
-									Vertex(model:test_model),
-									Vertex(model:test_model),
-									Vertex(model:test_model),
-								]
-							)
+							child:Container()
 						),
 						Expanded(
 							flex:7,
