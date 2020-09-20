@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:gspufrn/models/job.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:gspufrn/design/field/editable.dart';
+import 'package:gspufrn/design/field/list_controller.dart';
+import 'package:gspufrn/design/field/color_theme.dart' as theme;
 
 class Vertex extends StatelessWidget{
 	Job model;
+	List<String> dependencies;
 	TextEditingController tempo_controller = TextEditingController();
 	TextEditingController nome_controller = TextEditingController();
 	ScrollController scroll_controller = ScrollController(
@@ -13,7 +16,8 @@ class Vertex extends StatelessWidget{
 		debugLabel:'Scroll',
 	);
 	Vertex({
-		this.model
+		this.model,
+		this.dependencies,
 	});
 
 	_updateTempo(){
@@ -36,45 +40,45 @@ class Vertex extends StatelessWidget{
 					nome_controller.text = model.nome;
 
 					List<Chip> depends_on = List();
-					model.predecessores.forEach(
+					dependencies.forEach(
 						(element)=>depends_on.add(
 							Chip(
 								label:Text(
-									'Atividade ${element+1}',
+									'${element}',
 									style:TextStyle(
-										color:Colors.white
+										color:theme.primary_back,
 									),
 								),
-								backgroundColor:Color(0xFF554800),
+								backgroundColor:theme.secundary,
 							)
 						)
 					);
 
 					return Container(
 						child:Card(
-							color:Color(0xFFFFF2AA),
+							color:theme.background,
 							child:Padding(
 								padding:EdgeInsets.all(10.0),
 								child:Container(
 									child:Column(
 										children:[
 											Expanded(
-												flex:1,
+												flex:5,
 												child:editable(
 													beingEdited:false,
 													controller:nome_controller,
 												)
 											),
 											Expanded(
-												flex:1,
+												flex:5,
 												child:editable(
-													beingEdited:true,
+													beingEdited:false,
 													controller:tempo_controller,
 													numeric:true,
 												)
 											),
 											Expanded(
-												flex:3,
+												flex:13,
 												child:Column(
 													children:[
 														Expanded(
@@ -99,70 +103,8 @@ class Vertex extends StatelessWidget{
 														),
 														Expanded(
 															flex:4,
-															child:Row(
-																children:[
-																	Expanded(
-																		flex:1,
-																		child:IconButton(
-																			icon:Icon(Icons.arrow_left),
-																			onPressed:(){
-																				ScrollPosition pos = scroll_controller.position;
-																				if (scroll_controller.offset > pos.minScrollExtent){
-																					num where_to_go =scroll_controller.offset-100.0;
-																					if (where_to_go > pos.minScrollExtent){
-																						scroll_controller.animateTo(
-																							where_to_go,
-																							duration:Duration(milliseconds:200),
-																							curve: Curves.easeIn,
-
-																						);
-																					}else{
-																						scroll_controller.animateTo(
-																							pos.minScrollExtent,
-																							duration:Duration(milliseconds:200),
-																							curve: Curves.easeIn,
-
-																						);
-																					}
-																				}
-																				
-																			}
-																		),
-																	),
-																	Expanded(
-																		flex:3,
-																		child:Container(
-																		),
-																	),
-																	Expanded(
-																		flex:1,
-																		child:IconButton(
-																			icon:Icon(Icons.arrow_right),
-																			onPressed:(){
-																				ScrollPosition pos = scroll_controller.position;
-																				if (scroll_controller.offset < pos.maxScrollExtent){
-																					num where_to_go =scroll_controller.offset+100.0;
-																					if (where_to_go < pos.maxScrollExtent){
-																						scroll_controller.animateTo(
-																							where_to_go,
-																							duration:Duration(milliseconds:200),
-																							curve: Curves.easeIn,
-
-																						);
-																					}else{
-																						scroll_controller.animateTo(
-																							pos.maxScrollExtent,
-																							duration:Duration(milliseconds:200),
-																							curve: Curves.easeIn,
-
-																						);
-																					}
-																				}
-																				
-																			}
-																		),
-																	),
-																]
+															child:list_controller(
+																controller:scroll_controller,
 															),
 														)
 													]

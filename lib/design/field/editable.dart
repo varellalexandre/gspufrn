@@ -34,6 +34,9 @@ class _editableState extends State<editable>{
 	});
 
 	TextEditingValue numericValidator(TextEditingValue oldValue, TextEditingValue newValue){
+		if(oldValue.text == ''){
+			return newValue.copyWith(text:'0.0');
+		}
 		return newValue.copyWith(text:numeric_regex.stringMatch(newValue.text));
 	}
 
