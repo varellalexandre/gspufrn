@@ -33,7 +33,6 @@ class Comsoal extends StatelessWidget{
 			),
 			floatingActionButton:FloatingActionButton.extended(
 				onPressed:(){
-					print('hello');
 					showDialog(
 						context:context,
 						builder:(_)=>crudDialog(
