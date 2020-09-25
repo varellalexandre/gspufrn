@@ -3,6 +3,7 @@ import 'package:gspufrn/models/job.dart';
 import 'package:gspufrn/design/field/editable.dart';
 import 'package:gspufrn/design/field/color_theme.dart' as theme;
 import 'package:chips_choice/chips_choice.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 
 enum crudDialogAction{
@@ -13,13 +14,14 @@ enum crudDialogAction{
 
 
 class crudDialog extends StatelessWidget{
-	Linha model;
+	Linha linha_model;
 	Job job_model;
 	crudDialogAction action;
+	Dependencies dep = Dependencies();
 	TextEditingController tempo_controller;
 	TextEditingController nome_controller;
 
-	crudDialog({this.model,this.action,this.job_model}){
+	crudDialog({this.linha_model,this.action,this.job_model}){
 		this.tempo_controller=TextEditingController(text:"${job_model.tempo}");
 		this.nome_controller=TextEditingController(text:job_model.nome);
 	}
@@ -38,12 +40,11 @@ class crudDialog extends StatelessWidget{
 		tempo_controller.addListener(_updateTempo);
 		if(action == crudDialogAction.add){
 			List<ChipsChoiceOption> opts = List();
-			List<String> marked = List();
-			model.atividades.keys.forEach((value){
+			linha_model.atividades.keys.forEach((value){
 				opts.add(
 					ChipsChoiceOption(
 						value:value,
-						label:model.atividades[value].nome,
+						label:linha_model.atividades[value].nome,
 					)
 				);
 			});
@@ -112,10 +113,17 @@ class crudDialog extends StatelessWidget{
 							Expanded(
 								flex:10,
 								child:Container(
-									child:ChipsChoice.multiple(
-										value:marked,
-										options: opts,
-										onChanged: (val)=>setState(()=>marked=val),
+									child:ScopedModel<Dependencies>(
+										model:dep,
+										child:ScopedModelDescendant<Dependencies>(
+											builder:(context,child,model){
+												return ChipsChoice.multiple(
+													value:model.dependencies,
+													options: opts,
+													onChanged: (val)=>model.updateDepedencies(val),
+												);
+											}
+										)
 									)
 								)
 							),

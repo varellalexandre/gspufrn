@@ -40,7 +40,7 @@ class Comsoal extends StatelessWidget{
 					showDialog(
 						context:context,
 						builder:(_)=>crudDialog(
-							model:linha_model,
+							linha_model:linha_model,
 							job_model:job,
 							action:crudDialogAction.add,
 						),

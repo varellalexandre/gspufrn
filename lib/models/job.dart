@@ -28,6 +28,17 @@ class Job extends Model{
 	}
 }
 
+class Dependencies extends Model{
+	List dependencies = List();
+
+	updateDepedencies(List dep){
+		this.dependencies = dep;
+		notifyListeners();
+	}
+
+
+}
+
 class Linha extends Model{
 	num takt_time;
 	num eficiencia;
