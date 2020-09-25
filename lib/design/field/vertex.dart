@@ -8,8 +8,8 @@ import 'package:gspufrn/design/field/color_theme.dart' as theme;
 class Vertex extends StatelessWidget{
 	Job model;
 	List<String> dependencies;
-	TextEditingController tempo_controller = TextEditingController();
-	TextEditingController nome_controller = TextEditingController();
+	TextEditingController tempo_controller;
+	TextEditingController nome_controller;
 	ScrollController scroll_controller = ScrollController(
 		initialScrollOffset:0.0,
 		keepScrollOffset:true,
@@ -18,7 +18,10 @@ class Vertex extends StatelessWidget{
 	Vertex({
 		this.model,
 		this.dependencies,
-	});
+	}){
+		this.tempo_controller = TextEditingController(text:"${model.tempo}");
+		this.nome_controller = TextEditingController(text:model.nome);
+	}
 
 	_updateTempo(){
 		model.updateTempo(num.parse(tempo_controller.text));
@@ -36,9 +39,6 @@ class Vertex extends StatelessWidget{
 			model:model,
 			child:ScopedModelDescendant<Job>(
 				builder:(context,child,model){
-					tempo_controller.text = "${model.tempo}";
-					nome_controller.text = model.nome;
-
 					List<Chip> depends_on = List();
 					dependencies.forEach(
 						(element)=>depends_on.add(
@@ -65,14 +65,12 @@ class Vertex extends StatelessWidget{
 											Expanded(
 												flex:5,
 												child:editable(
-													beingEdited:false,
 													controller:nome_controller,
 												)
 											),
 											Expanded(
 												flex:5,
 												child:editable(
-													beingEdited:false,
 													controller:tempo_controller,
 													numeric:true,
 												)

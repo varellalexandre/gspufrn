@@ -16,14 +16,26 @@ class crudDialog extends StatelessWidget{
 	Linha model;
 	Job job_model;
 	crudDialogAction action;
-	TextEditingController tempo_controller = TextEditingController();
-	TextEditingController nome_controller = TextEditingController();
+	TextEditingController tempo_controller;
+	TextEditingController nome_controller;
 
-	crudDialog({this.model,this.action,this.job_model});
+	crudDialog({this.model,this.action,this.job_model}){
+		this.tempo_controller=TextEditingController(text:"${job_model.tempo}");
+		this.nome_controller=TextEditingController(text:job_model.nome);
+	}
+
+	_updateTempo(){
+		job_model.updateTempo(num.parse(tempo_controller.text));
+	}
+	_updateNome(){
+		job_model.updateNome(nome_controller.text);
+	}
 
 
 	@override
 	Widget build(BuildContext context){
+		nome_controller.addListener(_updateNome);
+		tempo_controller.addListener(_updateTempo);
 		if(action == crudDialogAction.add){
 			List<ChipsChoiceOption> opts = List();
 			List<String> marked = List();
@@ -36,7 +48,20 @@ class crudDialog extends StatelessWidget{
 				);
 			});
 			return AlertDialog(
-				title:Text('Atividade'),
+				title:Row(
+					children:[
+						Align(
+							alignment:Alignment.centerRight,
+							child:IconButton(
+								icon:Icon(Icons.close),
+								onPressed: (){
+									Navigator.pop(context);
+								}
+							)
+						),
+						Text('Atividade'),
+					]
+				),
 				titlePadding:EdgeInsets.all(10.0),
 				content:Container(
 					child:Column(
@@ -54,7 +79,6 @@ class crudDialog extends StatelessWidget{
 							Expanded(
 								flex:3,
 								child:editable(
-									beingEdited:false,
 									controller:nome_controller,
 								)
 							),
@@ -71,7 +95,6 @@ class crudDialog extends StatelessWidget{
 							Expanded(
 								flex:3,
 								child:editable(
-									beingEdited:false,
 									controller:tempo_controller,
 									numeric:true,
 								)
@@ -92,7 +115,7 @@ class crudDialog extends StatelessWidget{
 									child:ChipsChoice.multiple(
 										value:marked,
 										options: opts,
-										onChanged: (val) =>print(val),
+										onChanged: (val)=>setState(()=>marked=val),
 									)
 								)
 							),
@@ -107,17 +130,6 @@ class crudDialog extends StatelessWidget{
 												onPressed: (){
 
 												}
-											)
-										),
-										FittedBox(
-											fit:BoxFit.scaleDown,
-											child:Container(
-												child:IconButton(
-													icon:Icon(Icons.close),
-													onPressed: (){
-														Navigator.pop(context);
-													}
-												)
 											)
 										),
 									]

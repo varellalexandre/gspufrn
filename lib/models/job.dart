@@ -10,10 +10,12 @@ class Job extends Model{
 
 	void updateNome(String nome){
 		this.nome = nome;
+		notifyListeners();
 	}
 
 	void updateTempo(num tempo){
 		this.tempo = tempo;
+		notifyListeners();
 	}
 
 	Job({
