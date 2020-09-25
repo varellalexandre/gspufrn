@@ -33,10 +33,15 @@ class Comsoal extends StatelessWidget{
 			),
 			floatingActionButton:FloatingActionButton.extended(
 				onPressed:(){
+					Job job = Job(
+						tempo:0,
+						nome:'Nova Atividade'
+					);
 					showDialog(
 						context:context,
 						builder:(_)=>crudDialog(
 							model:linha_model,
+							job_model:job,
 							action:crudDialogAction.add,
 						),
 					);

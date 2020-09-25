@@ -60,7 +60,8 @@ class Linha extends Model{
 	}
 
 	void addJob(Job job){
-		//this.atividades.add(job);
+		this.atividades[job.id_atv] = job;
+		notifyListeners();
 	}
 
 	bool addDependence(String origin,String dependent){

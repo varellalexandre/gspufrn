@@ -14,11 +14,12 @@ enum crudDialogAction{
 
 class crudDialog extends StatelessWidget{
 	Linha model;
+	Job job_model;
 	crudDialogAction action;
 	TextEditingController tempo_controller = TextEditingController();
 	TextEditingController nome_controller = TextEditingController();
 
-	crudDialog({this.model,this.action});
+	crudDialog({this.model,this.action,this.job_model});
 
 
 	@override
@@ -86,13 +87,41 @@ class crudDialog extends StatelessWidget{
 								)
 							),
 							Expanded(
-								flex:15,
+								flex:10,
 								child:Container(
 									child:ChipsChoice.multiple(
 										value:marked,
 										options: opts,
 										onChanged: (val) =>print(val),
 									)
+								)
+							),
+							Expanded(
+								flex:2,
+								child:Row(
+									children:[
+										FittedBox(
+											fit:BoxFit.scaleDown,
+											child:IconButton(
+												icon:Icon(Icons.save),
+												onPressed: (){
+
+												}
+											)
+										),
+										FittedBox(
+											fit:BoxFit.scaleDown,
+											child:Container(
+												child:IconButton(
+													icon:Icon(Icons.close),
+													onPressed: (){
+														Navigator.pop(context);
+													}
+												)
+											)
+										),
+									]
+
 								)
 							)
 						]
