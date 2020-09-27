@@ -24,10 +24,11 @@ class sidebar extends StatelessWidget{
 								dependencies:model.depends_on(
 									model.atividades[atividade].id_atv,
 								),
+								linha:model,
 							)
 						)
 					);
-					model.calculateComsoal();
+					//model.calculateComsoal();
 
 					return Drawer(
 						child:Container(

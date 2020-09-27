@@ -4,10 +4,12 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:gspufrn/design/field/editable.dart';
 import 'package:gspufrn/design/field/list_controller.dart';
 import 'package:gspufrn/design/field/color_theme.dart' as theme;
+import 'package:gspufrn/design/field/crud_dialog.dart';
 
 class Vertex extends StatelessWidget{
 	Job model;
 	List<String> dependencies;
+	Linha linha;
 	TextEditingController tempo_controller;
 	TextEditingController nome_controller;
 	ScrollController scroll_controller = ScrollController(
@@ -18,6 +20,7 @@ class Vertex extends StatelessWidget{
 	Vertex({
 		this.model,
 		this.dependencies,
+		this.linha,
 	}){
 		this.tempo_controller = TextEditingController(text:"${model.tempo}");
 		this.nome_controller = TextEditingController(text:model.nome);
@@ -63,13 +66,55 @@ class Vertex extends StatelessWidget{
 									child:Column(
 										children:[
 											Expanded(
-												flex:5,
+												flex:2,
+												child:Row(
+													children:[
+														Expanded(
+															flex:8,
+															child:Container()
+														),
+														Expanded(
+															flex:1,
+															child:FittedBox(
+																fit:BoxFit.scaleDown,
+																child:IconButton(
+																	icon:Icon(Icons.edit),
+																	onPressed: (){
+																		showDialog(
+																			context:context,
+																			builder:(_)=>crudDialog(
+																				job_model:model,
+																				action:crudDialogAction.edit,
+																				linha_model:linha,
+																			),
+																		);
+																	}
+																)
+															)
+														),
+														Expanded(
+															flex:1,
+															child:FittedBox(
+																fit:BoxFit.scaleDown,
+																child:IconButton(
+																	icon:Icon(Icons.close),
+																	onPressed: (){
+																		model.delete(model.id_atv);
+																	}
+																)
+															)
+														)
+													]
+												)
+											),
+											Expanded(
+												flex:4,
 												child:editable(
 													controller:nome_controller,
 												)
 											),
 											Expanded(
-												flex:5,
+												flex:4,
 												child:editable(
 													controller:tempo_controller,
 													numeric:true,

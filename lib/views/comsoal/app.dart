@@ -5,6 +5,7 @@ import 'package:zoom_widget/zoom_widget.dart';
 import 'package:gspufrn/models/job.dart';
 import 'package:gspufrn/design/field/sidebar.dart';
 import 'package:gspufrn/design/field/crud_dialog.dart';
+import 'package:gspufrn/design/views/main.dart';
 
 class Comsoal extends StatelessWidget{
 	Linha linha_model=get_example();
@@ -16,20 +17,7 @@ class Comsoal extends StatelessWidget{
 			appBar:NavBar(),
 			drawer:sidebar(model:linha_model),
 			body:Container(
-				child:Column(
-					children:[
-						Expanded(
-							flex:2,
-							child:Container(
-							),
-						),
-						Expanded(
-							flex:7,
-							child:Container(
-							),
-						),
-					],
-				)
+				child:Main(model:linha_model),
 			),
 			floatingActionButton:FloatingActionButton.extended(
 				onPressed:(){

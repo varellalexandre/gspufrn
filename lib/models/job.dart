@@ -7,6 +7,7 @@ class Job extends Model{
 	String id_atv;
 	num tempo;
 	String nome;
+	Function delete;
 
 	void updateNome(String nome){
 		this.nome = nome;
@@ -50,6 +51,7 @@ class Linha extends Model{
 	Linha(List atividades,{this.horas_disp,this.qtd_pecas}){
 		this.atividades = Map();
 		for(Job atividade in atividades){
+			atividade.delete = deleteJob;
 			this.atividades[atividade.id_atv] = atividade;
 		}
 	}
@@ -63,6 +65,20 @@ class Linha extends Model{
 		return elements;
 	}
 
+	void deleteJob(String job){
+		if(this.atividades.keys.contains(job)){
+			this.atividades.remove(job);
+			if(this.dependencies.keys.contains(job)){
+				this.dependencies.remove(job);
+			}
+			for(String atv in this.dependencies.keys){
+				if(this.dependencies[atv].contains(job)){
+					this.dependencies[atv].remove(job);
+				}
+			}
+		}
+		notifyListeners();
+	}
 
 	void updateHoras(num horas){
 		this.horas_disp = horas;
@@ -73,6 +89,7 @@ class Linha extends Model{
 	}
 
 	void addJob(Job job){
+		job.delete = deleteJob;
 		this.atividades[job.id_atv] = job;
 		notifyListeners();
 	}
