@@ -3,6 +3,7 @@ import 'package:gspufrn/models/job.dart';
 import 'package:gspufrn/models/group.dart';
 import 'package:gspufrn/design/field/draggablejob.dart';
 import 'package:gspufrn/design/field/grouplist.dart';
+import 'package:gspufrn/design/field/draggroup.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 //draggable
@@ -68,11 +69,11 @@ class Main extends StatelessWidget{
 										flex:3,
 										child:ScopedModelDescendant<Linha>(
 											builder:(context,child,model){
-												List<Job> jobs = List<Job>();
+												Group all_jobs = Group();
 												model.atividades.keys.forEach((key){
-													jobs.add(model.atividades[key]);
+													all_jobs.addJob(model.atividades[key]);
 												});
-												return draggablejob(jobs:jobs);
+												return draggroup(models:all_jobs,linha_modelo:model);
 											}
 										)
 									),

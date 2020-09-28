@@ -15,6 +15,7 @@ class draggablejob extends StatelessWidget{
 		jobs.forEach((job){
 			elements.add(
 				Draggable(
+					data:job.id_atv,
 					child:Container(
 						margin: EdgeInsets.all(15),
 						color: theme.primary,
