@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gspufrn/models/job.dart';
 import 'package:gspufrn/models/group.dart';
 import 'package:gspufrn/design/field/draggablejob.dart';
+import 'package:gspufrn/design/field/grouplist.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 //draggable
@@ -33,7 +34,7 @@ class Main extends StatelessWidget{
 										child:FittedBox(
 											fit:BoxFit.scaleDown,
 											child:IconButton(
-												icon:Icon(Icons.send),
+												icon:Icon(Icons.add),
 												onPressed: (){
 
 												}
@@ -45,7 +46,7 @@ class Main extends StatelessWidget{
 										child:FittedBox(
 											fit:BoxFit.scaleDown,
 											child:IconButton(
-												icon:Icon(Icons.add),
+												icon:Icon(Icons.send),
 												onPressed: (){
 
 												}
@@ -56,11 +57,15 @@ class Main extends StatelessWidget{
 							)
 						),
 						Expanded(
+							flex:1,
+							child:Container()
+						),
+						Expanded(
 							flex:15,
 							child:Row(
 								children:[
 									Expanded(
-										flex:4,
+										flex:3,
 										child:ScopedModelDescendant<Linha>(
 											builder:(context,child,model){
 												List<Job> jobs = List<Job>();
@@ -72,8 +77,8 @@ class Main extends StatelessWidget{
 										)
 									),
 									Expanded(
-										flex:8,
-										child:Container(),
+										flex:9,
+										child:grouplist(),
 									)
 								]
 							),

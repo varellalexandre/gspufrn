@@ -28,9 +28,11 @@ class Vertex extends StatelessWidget{
 
 	_updateTempo(){
 		model.updateTempo(num.parse(tempo_controller.text));
+		linha.notifyListeners();
 	}
 	_updateNome(){
 		model.updateNome(nome_controller.text);
+		linha.notifyListeners();
 	}
 
 
