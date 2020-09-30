@@ -6,6 +6,7 @@ import 'package:gspufrn/models/job.dart';
 import 'package:gspufrn/design/field/sidebar.dart';
 import 'package:gspufrn/design/field/crud_dialog.dart';
 import 'package:gspufrn/design/views/main.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class Comsoal extends StatelessWidget{
 	Linha linha_model=get_example();
@@ -17,7 +18,7 @@ class Comsoal extends StatelessWidget{
 			appBar:NavBar(),
 			drawer:sidebar(model:linha_model),
 			body:Container(
-				child:Main(model:linha_model),
+				child:Main(linha_model:linha_model)
 			),
 			floatingActionButton:FloatingActionButton.extended(
 				onPressed:(){

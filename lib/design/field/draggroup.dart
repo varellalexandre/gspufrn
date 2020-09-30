@@ -8,10 +8,15 @@ class draggroup extends StatelessWidget{
 	Group models;
 	Linha linha_modelo;
 	String title;
-	Color color;
-	draggroup({this.models,this.linha_modelo,this.title}){
-		this.color = RandomColor().randomColor();
-	}
+	Axis direction;
+	Function remove;
+	draggroup({
+		this.models,
+		this.linha_modelo,
+		this.remove,
+		this.title,
+		this.direction:Axis.vertical
+	});
 
 	@override
 	Widget build(BuildContext context){
@@ -35,8 +40,8 @@ class draggroup extends StatelessWidget{
 										Draggable(
 											data:job.id_atv,
 											child:Container(
-												margin: EdgeInsets.all(15),
-												color: RandomColor().randomColor(),
+												margin: EdgeInsets.all(5),
+												color: theme.primary,
 												child:Align(
 													alignment:Alignment.center,
 													child:RichText(
@@ -51,7 +56,7 @@ class draggroup extends StatelessWidget{
 											),
 											feedback:Container(
 												margin: EdgeInsets.all(15),
-												color: theme.primary,
+												color: RandomColor().randomColor(),
 												child:Align(
 													alignment:Alignment.center,
 													child:RichText(
@@ -64,6 +69,11 @@ class draggroup extends StatelessWidget{
 												width:200,
 												height:50,
 											),
+											onDragEnd:(DraggableDetails details){
+												if(details.wasAccepted){
+													this.remove(job.id_atv);
+												}
+											},
 											childWhenDragging: Container(
 												margin: EdgeInsets.all(15),
 												color: theme.background,
@@ -75,14 +85,17 @@ class draggroup extends StatelessWidget{
 								});
 								return Container(
 									decoration:BoxDecoration(
-										border:Border.all(),
-										borderRadius:BorderRadius.all(Radius.circular(2)),
+										border:Border.all(
+											color:theme.background,
+										),
+										borderRadius:BorderRadius.all(Radius.circular(3)),
 										color: theme.background,
 									),
 									width:0.9*(MediaQuery.of(context).size.width),
 									height:(MediaQuery.of(context).size.height),
 									margin: EdgeInsets.all(15),
 									child:ListView(
+										scrollDirection:this.direction,
 										padding:EdgeInsets.all(15),
 										children:elements,
 									)
@@ -92,6 +105,7 @@ class draggroup extends StatelessWidget{
 							return true;
 						},
 						onAccept: (data){
+							models.addJob(linha_modelo.atividades[data]);
 						}
 					)
 				)
