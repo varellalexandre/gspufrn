@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gspufrn/models/job.dart';
 import 'package:gspufrn/models/group.dart';
-import 'package:gspufrn/design/field/draggablejob.dart';
-import 'package:gspufrn/design/field/grouplist.dart';
 import 'package:gspufrn/design/field/draggroup.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -35,9 +33,29 @@ class Main extends StatelessWidget{
 										child:FittedBox(
 											fit:BoxFit.scaleDown,
 											child:IconButton(
+												icon:Icon(Icons.remove),
+												onPressed: (){
+													if(this.groups.length > 0){
+														this.groups.removeAt(
+															this.groups.length-1
+														);
+														model.notifyListeners();
+													}
+												}
+											)
+										)
+									),
+									Expanded(
+										flex:1,
+										child:FittedBox(
+											fit:BoxFit.scaleDown,
+											child:IconButton(
 												icon:Icon(Icons.add),
 												onPressed: (){
-
+													this.groups.add(
+														Group()
+													);
+													model.notifyListeners();
 												}
 											)
 										)
@@ -58,28 +76,57 @@ class Main extends StatelessWidget{
 							)
 						),
 						Expanded(
-							flex:1,
-							child:Container()
-						),
-						Expanded(
 							flex:15,
-							child:Row(
+							child:Column(
 								children:[
 									Expanded(
-										flex:3,
+										flex:2,
 										child:ScopedModelDescendant<Linha>(
 											builder:(context,child,model){
 												Group all_jobs = Group();
 												model.atividades.keys.forEach((key){
 													all_jobs.addJob(model.atividades[key]);
 												});
-												return draggroup(models:all_jobs,linha_modelo:model);
+												return 	Container(
+													constraints:BoxConstraints(minWidth:300),
+													width:0.5*MediaQuery.of(context).size.width,
+													height:(MediaQuery.of(context).size.height),
+													child:draggroup(
+														title:'Atividades',
+														models:all_jobs,
+														linha_modelo:model
+													)
+												);
 											}
 										)
 									),
 									Expanded(
 										flex:9,
-										child:grouplist(),
+										child:ScopedModelDescendant<Linha>(
+											builder:(context,child,model){
+												List<Widget> lista_grupos = List();
+												groups.forEach((elemento){
+													lista_grupos.add(
+														Container(
+															width:300,
+															height:(MediaQuery.of(context).size.height),
+															child:draggroup(
+																title:'Grupo ${lista_grupos.length+1}',
+																models:elemento,
+																linha_modelo:model
+															)
+														)
+													);
+												});
+												return Container(
+													child:ListView(
+														padding:EdgeInsets.all(15),
+														scrollDirection:Axis.horizontal,
+														children:lista_grupos,
+													)
+												);
+											}
+										)
 									)
 								]
 							),

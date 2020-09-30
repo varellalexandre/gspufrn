@@ -16,6 +16,7 @@ dependencies:
   scoped_model: ^1.0.1
   crypto: ">=2.1.5"
   chips_choice: ">=1.2.0"
+  random_color: ">=1.0.5"
 
 dev_dependencies:
   flutter_test:
