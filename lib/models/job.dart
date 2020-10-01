@@ -1,6 +1,7 @@
 import 'package:scoped_model/scoped_model.dart';
 import 'package:crypto/crypto.dart';
 import 'package:gspufrn/models/group.dart';
+import 'package:gspufrn/models/resposta.dart';
 import 'dart:core';
 import 'dart:math';
 import 'dart:convert';
@@ -125,9 +126,9 @@ class Linha extends Model{
 		return true;
 	}
 
-	List<Group> calculateComsoal(){
+	Resposta calculateComsoal(){
 		if(this.qtd_pecas == 0 || this.qtd_pecas == null){
-			return List();
+			return null;
 		}
 		this.takt_time = this.horas_disp/this.qtd_pecas;
 		num _numero_postos = 0;
@@ -136,55 +137,65 @@ class Linha extends Model{
 		});
 		_numero_postos = _numero_postos / this.takt_time;
 		int numero_postos = _numero_postos.ceil();
-		List<Group> estagios = List();
-		Map<String,List> a = Map();
-		List<String> b = List();
+		Resposta retorno = null;
+		for(int count = 0;count < 1000;count++){
+			List<Job> disponiveis = List();
+			Map<String,List> a = Map();
+			List<String> b = List();
 
-		this.atividades.keys.forEach((id){
-			if(this.dependencies.keys.contains(id)){
-				a[id] = List.from(this.dependencies[id]);
-			}else{
-				b.add(id);
-			}
-		});
-		estagios.add(Group());
-		while(a.keys.length > 0){
-			while(b.length > 0){
-				Random new_rand = Random();
-				int random_job = new_rand.nextInt(b.length);
-				Job actual = this.atividades[b[random_job]];
-				Group estagio = estagios[estagios.length-1];
-				if(actual.tempo > this.takt_time){
-					Group new_group = Group();
-					new_group.addJob(actual);
-					estagios.add(new_group);
-				}else if((estagio.totalTime()+actual.tempo) > this.takt_time){
-					Group new_group = Group();
-					new_group.addJob(actual);
-					estagios.add(new_group);					
+			this.atividades.keys.forEach((id){
+				disponiveis.add(this.atividades[id]);
+				if(this.dependencies.keys.contains(id)){
+					a[id] = List.from(this.dependencies[id]);
 				}else{
-					estagio.addJob(actual);
-				}
-				a.keys.forEach((key){
-					if(a[key].contains(b[random_job])){
-						a[key].remove(b[random_job]);
-					}
-				});
-				a.remove(b[random_job]);
-				b.removeAt(random_job);
-			}
-			a.keys.forEach((key){
-				if(a[key].length == 0){
-					b.add(key);
+					b.add(id);
 				}
 			});
+			
+			Resposta resolucao = Resposta(jobs:disponiveis);
+			resolucao.groups.add(Group());
+			
+			while(a.keys.length > 0){
+				while(b.length > 0){
+					Random new_rand = Random();
+					int random_job = new_rand.nextInt(b.length);
+					Job actual = this.atividades[b[random_job]];
+					Group estagio = resolucao.groups[resolucao.groups.length-1];
+					if(actual.tempo > this.takt_time){
+						Group new_group = Group();
+						new_group.addJob(actual);
+						resolucao.groups.add(new_group);
+					}else if((estagio.totalTime()+actual.tempo) > this.takt_time){
+						Group new_group = Group();
+						new_group.addJob(actual);
+						resolucao.groups.add(new_group);					
+					}else{
+						estagio.addJob(actual);
+					}
+					a.keys.forEach((key){
+						if(a[key].contains(b[random_job])){
+							a[key].remove(b[random_job]);
+						}
+					});
+					a.remove(b[random_job]);
+					b.removeAt(random_job);
+				}
+				a.keys.forEach((key){
+					if(a[key].length == 0){
+						b.add(key);
+					}
+				});
+			}
+			if(retorno == null){
+				retorno = resolucao;
+			}else if(
+				(retorno.eff(this.takt_time) <= resolucao.eff(this.takt_time)) 
+			){
+				retorno = resolucao;
+			}
+
 		}
-
-		estagios.forEach((estagio){
-			print(estagio.group_elements());
-		});
-
-		return estagios;
+		return retorno;
 
 
 	}

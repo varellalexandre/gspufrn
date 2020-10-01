@@ -74,7 +74,28 @@ class Main extends StatelessWidget{
 											child:IconButton(
 												icon:Icon(Icons.send),
 												onPressed: (){
-													this.problem_info.calculateComsoal();
+													if(this.response.groups.length == 0){
+														print('Crie grupos nos botões de +/- \n');
+														return;
+													}
+													if(this.response.disponiveis.jobs.length > 0){
+														print('Aloque todas as tarefas!\n');
+														return;
+													}
+													Resposta correta = this.problem_info.calculateComsoal();
+													if(correta == null){
+														print('Erro na quantidade de peças');
+														return;
+													}
+													bool valid_answer = this.response.isvalid(this.problem_info.takt_time);
+													if(!valid_answer){
+														print('Resposta inválida');
+														return;
+													}
+													if(!correta.compare(this.response,this.problem_info.takt_time)){
+														print('Você pode melhorar essa eficiencia\n');
+														return;
+													}
 												}
 											)
 										)
