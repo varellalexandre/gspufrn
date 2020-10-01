@@ -116,7 +116,7 @@ class draggroup extends StatelessWidget{
 						},
 						onAccept: (data){
 							Job draggedJob;
-							this.response.disponiveis.jobs.forEach((job){
+							this.response.all_jobs.jobs.forEach((job){
 								if(job.id_atv == data){
 									draggedJob = job;
 									this.model.addJob(draggedJob);

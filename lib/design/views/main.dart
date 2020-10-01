@@ -88,7 +88,7 @@ class Main extends StatelessWidget{
 											builder:(context,child,model){
 												return Container(
 													constraints:BoxConstraints(minWidth:300),
-													width:0.5*MediaQuery.of(context).size.width,
+													width:0.75*MediaQuery.of(context).size.width,
 													height:(MediaQuery.of(context).size.height),
 													child:draggroup(
 														model:model.disponiveis,
