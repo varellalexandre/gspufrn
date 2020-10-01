@@ -8,8 +8,12 @@ import 'package:scoped_model/scoped_model.dart';
 //draggable
 class Main extends StatelessWidget{
 	Resposta response;
+	Linha problem_info;
 
-	Main({this.response});
+	Main({
+		this.response,
+		this.problem_info
+	});
 
 	@override
 	Widget build(BuildContext context){
@@ -70,7 +74,7 @@ class Main extends StatelessWidget{
 											child:IconButton(
 												icon:Icon(Icons.send),
 												onPressed: (){
-
+													this.problem_info.calculateComsoal();
 												}
 											)
 										)
@@ -111,7 +115,7 @@ class Main extends StatelessWidget{
 															width:300,
 															height:(MediaQuery.of(context).size.height),
 															child:draggroup(
-																title:'Grupo ${lista_grupos.length+1}',
+																title:'Estágio ${lista_grupos.length+1}',
 																response:model,
 																model:elemento,
 															)

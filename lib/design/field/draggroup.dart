@@ -20,10 +20,16 @@ class draggroup extends StatelessWidget{
 
 	@override
 	Widget build(BuildContext context){
+		int flex_val;
+		if(direction == Axis.horizontal){
+			flex_val = 3;
+		}else{
+			flex_val = 1;
+		}
 		return Column(
 			children:[
 				Expanded(
-					flex:1,
+					flex:flex_val,
 					child:FittedBox(
 						fit:BoxFit.scaleDown,
 						child:Text(this.title),

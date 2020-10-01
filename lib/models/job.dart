@@ -1,6 +1,8 @@
 import 'package:scoped_model/scoped_model.dart';
 import 'package:crypto/crypto.dart';
+import 'package:gspufrn/models/group.dart';
 import 'dart:core';
+import 'dart:math';
 import 'dart:convert';
 
 class Job extends Model{
@@ -39,6 +41,8 @@ class Dependencies extends Model{
 
 
 }
+
+
 
 class Linha extends Model{
 	num takt_time;
@@ -121,13 +125,68 @@ class Linha extends Model{
 		return true;
 	}
 
-	void calculateComsoal(){
-		//this.takt_time = this.horas_disp/this.qtd_pecas;
-		//List<Job> a_list = List<Job>.from(atividades);
-		//List<Job> b_list = List<Job>();
-		//for(var count in a_list){
-		//	print(count.id_atv);
-		//}
+	List<Group> calculateComsoal(){
+		if(this.qtd_pecas == 0 || this.qtd_pecas == null){
+			return List();
+		}
+		this.takt_time = this.horas_disp/this.qtd_pecas;
+		num _numero_postos = 0;
+		this.atividades.keys.forEach((id){
+			_numero_postos = _numero_postos + this.atividades[id].tempo;
+		});
+		_numero_postos = _numero_postos / this.takt_time;
+		int numero_postos = _numero_postos.ceil();
+		List<Group> estagios = List();
+		Map<String,List> a = Map();
+		List<String> b = List();
+
+		this.atividades.keys.forEach((id){
+			if(this.dependencies.keys.contains(id)){
+				a[id] = List.from(this.dependencies[id]);
+			}else{
+				b.add(id);
+			}
+		});
+		estagios.add(Group());
+		while(a.keys.length > 0){
+			while(b.length > 0){
+				Random new_rand = Random();
+				int random_job = new_rand.nextInt(b.length);
+				Job actual = this.atividades[b[random_job]];
+				Group estagio = estagios[estagios.length-1];
+				if(actual.tempo > this.takt_time){
+					Group new_group = Group();
+					new_group.addJob(actual);
+					estagios.add(new_group);
+				}else if((estagio.totalTime()+actual.tempo) > this.takt_time){
+					Group new_group = Group();
+					new_group.addJob(actual);
+					estagios.add(new_group);					
+				}else{
+					estagio.addJob(actual);
+				}
+				a.keys.forEach((key){
+					if(a[key].contains(b[random_job])){
+						a[key].remove(b[random_job]);
+					}
+				});
+				a.remove(b[random_job]);
+				b.removeAt(random_job);
+			}
+			a.keys.forEach((key){
+				if(a[key].length == 0){
+					b.add(key);
+				}
+			});
+		}
+
+		estagios.forEach((estagio){
+			print(estagio.group_elements());
+		});
+
+		return estagios;
+
+
 	}
 
 }

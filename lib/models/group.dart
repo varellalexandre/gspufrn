@@ -16,4 +16,19 @@ class Group extends Model{
 		this.jobs.remove(job);
 		notifyListeners();
 	}
+
+	List<String> group_elements(){
+		List<String> elements = List.generate(this.jobs.length,(index){
+			return jobs[index].nome;
+		});
+		return elements;
+	}
+
+	num totalTime(){
+		num total = 0;
+		jobs.forEach((job){
+			total = total + job.tempo;
+		});
+		return total;
+	}
 }

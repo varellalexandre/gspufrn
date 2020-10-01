@@ -32,6 +32,7 @@ class Comsoal extends StatelessWidget{
 							});
 							return Container(
 								child:Main(
+									problem_info:model,
 									response:Resposta(jobs:disponiveis)
 								),
 							);
