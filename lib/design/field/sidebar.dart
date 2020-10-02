@@ -16,19 +16,19 @@ class sidebar extends StatelessWidget{
 			child:ScopedModelDescendant<Linha>(
 				builder:(context,child,model){
 					List<Vertex> children_list = List<Vertex>();
-
 					model.atividades.keys.forEach(
-						(atividade)=>children_list.add(
-							Vertex(
-								model:model.atividades[atividade],
-								dependencies:model.depends_on(
-									model.atividades[atividade].id_atv,
-								),
-								linha:model,
-							)
-						)
+						(atividade){
+							children_list.add(
+								Vertex(
+									model:model.atividades[atividade],
+									dependencies:model.depends_on(
+										model.atividades[atividade].id_atv,
+									),
+									linha:model,
+								)
+							);
+						}
 					);
-					//model.calculateComsoal();
 
 					return Drawer(
 						child:Container(

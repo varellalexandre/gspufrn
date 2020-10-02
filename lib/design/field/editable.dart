@@ -12,10 +12,12 @@ class editable extends StatefulWidget{
 	});
 
 	@override
-	_editableState createState()=> _editableState(
-		controller:controller,
-		numeric:numeric,
-	);
+	_editableState createState(){
+		return _editableState(
+			controller:this.controller,
+			numeric:this.numeric,
+		);
+	}
 }
 
 class _editableState extends State<editable>{
@@ -25,8 +27,19 @@ class _editableState extends State<editable>{
 
 	_editableState({
 		this.controller,
-		this.numeric=false,
+		this.numeric,
 	});
+
+	@override
+	void initState(){
+		super.initState();
+	}
+
+	@override
+	void dispose(){
+		this.controller.dispose();
+		super.dispose();
+	}
 
 	TextEditingValue numericValidator(TextEditingValue oldValue, TextEditingValue newValue){
 		if(oldValue.text == ''){
@@ -45,7 +58,7 @@ class _editableState extends State<editable>{
 		}
 		return TextField(
 			keyboardType:keyboard,
-			controller:controller,
+			controller:this.controller,
 			inputFormatters:formatter,
 		);
 	}

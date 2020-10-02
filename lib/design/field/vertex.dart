@@ -10,8 +10,6 @@ class Vertex extends StatelessWidget{
 	Job model;
 	List<String> dependencies;
 	Linha linha;
-	TextEditingController tempo_controller;
-	TextEditingController nome_controller;
 	ScrollController scroll_controller = ScrollController(
 		initialScrollOffset:0.0,
 		keepScrollOffset:true,
@@ -21,25 +19,11 @@ class Vertex extends StatelessWidget{
 		this.model,
 		this.dependencies,
 		this.linha,
-	}){
-		this.tempo_controller = TextEditingController(text:"${model.tempo}");
-		this.nome_controller = TextEditingController(text:model.nome);
-	}
-
-	_updateTempo(){
-		model.updateTempo(num.parse(tempo_controller.text));
-		linha.notifyListeners();
-	}
-	_updateNome(){
-		model.updateNome(nome_controller.text);
-		linha.notifyListeners();
-	}
+	});
 
 
 	@override
 	Widget build(BuildContext context){
-		tempo_controller.addListener(_updateTempo);
-		nome_controller.addListener(_updateNome);
 		return ScopedModel<Job>(
 			model:model,
 			child:ScopedModelDescendant<Job>(
@@ -58,7 +42,6 @@ class Vertex extends StatelessWidget{
 							)
 						)
 					);
-
 					return Container(
 						child:Card(
 							color:theme.background,
@@ -102,6 +85,7 @@ class Vertex extends StatelessWidget{
 																	icon:Icon(Icons.close),
 																	onPressed: (){
 																		model.delete(model.id_atv);
+																		linha.notifyListeners();
 																	}
 																)
 															)
@@ -111,15 +95,22 @@ class Vertex extends StatelessWidget{
 											),
 											Expanded(
 												flex:4,
-												child:editable(
-													controller:nome_controller,
+												child:Align(
+													alignment:Alignment.centerLeft,
+													child:FittedBox(
+														fit:BoxFit.scaleDown,
+														child:Text('Nome : ${model.nome}')
+													),
 												)
 											),
 											Expanded(
 												flex:4,
-												child:editable(
-													controller:tempo_controller,
-													numeric:true,
+												child:Align(
+													alignment:Alignment.centerLeft,
+													child:FittedBox(
+														fit:BoxFit.scaleDown,
+														child:Text('Tempo : ${model.tempo}')
+													),
 												)
 											),
 											Expanded(
