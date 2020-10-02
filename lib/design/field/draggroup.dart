@@ -30,9 +30,16 @@ class draggroup extends StatelessWidget{
 			children:[
 				Expanded(
 					flex:flex_val,
-					child:FittedBox(
-						fit:BoxFit.scaleDown,
-						child:Text(this.title),
+					child:ScopedModel<Group>(
+						model:this.model,
+						child:ScopedModelDescendant<Group>(
+							builder:(context,child,model){
+								return FittedBox(
+									fit:BoxFit.scaleDown,
+									child:Text("${this.title}\nTempo : ${this.model.totalTime()} "),
+								);
+							}
+						)
 					),
 				),
 				Expanded(

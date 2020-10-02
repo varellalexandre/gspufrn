@@ -81,7 +81,7 @@ class Resposta extends Model{
 	bool compare(Resposta comp, num takt){
 		bool comparacao = true;
 		comparacao = comparacao & (comp.eff(takt) >= this.eff(takt));
-		comparacao = comparacao & (comp.loss(takt) >= this.loss(takt));
+		comparacao = comparacao & (comp.loss(takt) <= this.loss(takt));
 		return comparacao;
 	}
 
