@@ -82,14 +82,19 @@ class Main extends StatelessWidget{
 														print('Aloque todas as tarefas!\n');
 														return;
 													}
+													bool dependencies_answer = this.response.isDependenciesValid(this.problem_info);
+													if(!dependencies_answer){
+														print('Verifique se a sequência de atividades está correta');
+														return;
+													}
 													Resposta correta = this.problem_info.calculateComsoal();
 													if(correta == null){
 														print('Erro na quantidade de peças');
 														return;
 													}
-													bool valid_answer = this.response.isvalid(this.problem_info.takt_time);
-													if(!valid_answer){
-														print('Resposta inválida');
+													bool time_answer = this.response.isTimeValid(this.problem_info.takt_time);
+													if(!time_answer){
+														print('Verifique se os tempos estão corretamente alocados');
 														return;
 													}
 													if(!correta.compare(this.response,this.problem_info.takt_time)){

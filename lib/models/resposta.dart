@@ -16,12 +16,11 @@ class Resposta extends Model{
 		return (tempo_total/(takt*groups.length));
 	}
 
-	bool isvalid(num takt){
+	bool isTimeValid(num takt){
 		bool valid = true;
 		groups.forEach((group){
-			
 			if(group.jobs.length == 0){
-				valid =valid &&  false;
+				valid = valid &&  false;
 			}
 			else if(group.jobs.length == 1 && group.totalTime() > takt){
 				valid = valid && true;
@@ -32,6 +31,43 @@ class Resposta extends Model{
 			}
 		});
 		return valid;
+	}
+
+	int get_group_pos(String id_atv){
+		int count = 0;
+		int group_id = null;
+		groups.forEach((group){
+			if(group.group_elements().contains(id_atv)){
+				group_id = count;
+				return;
+			}
+			count = count + 1;
+		});
+		return group_id;
+	}
+
+	bool isDependenciesValid(Linha sequencia){
+		int count = 0;
+		bool validacao = true;
+		groups.forEach((group){
+			for(Job atv in group.jobs){
+				if(sequencia.dependencies.keys.contains(atv.id_atv)){
+					for(String id_atv in sequencia.dependencies[atv.id_atv]){
+						int el_pos = this.get_group_pos(id_atv);
+						if(el_pos == null){
+							validacao = false;
+							return;
+						}else if(el_pos > count){
+							validacao = false;
+							return;
+						}
+					}
+				}
+			}
+			count = count + 1;
+		});
+
+		return validacao;
 	}
 
 	num loss(num takt){

@@ -19,7 +19,7 @@ class Group extends Model{
 
 	List<String> group_elements(){
 		List<String> elements = List.generate(this.jobs.length,(index){
-			return jobs[index].nome;
+			return jobs[index].id_atv;
 		});
 		return elements;
 	}
