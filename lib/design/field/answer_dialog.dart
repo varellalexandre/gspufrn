@@ -54,7 +54,7 @@ class answerdialog extends StatelessWidget{
 							child:Container(
 								child:FaIcon(
 									icone,
-									size:0.45*(MediaQuery.of(context).size.width),
+									size:0.45*(MediaQuery.of(context).size.height),
 									color:cor,
 								)
 							)

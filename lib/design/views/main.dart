@@ -132,7 +132,7 @@ class Main extends StatelessWidget{
 														showDialog(
 															context:context,
 															builder:(_)=>answerdialog(
-																text:'Você pode melhorar essa eficiencia\n',
+																text:'Você pode melhorar essa eficiência\n',
 																correct:false,
 															)
 														);
