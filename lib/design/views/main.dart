@@ -157,7 +157,7 @@ class Main extends StatelessWidget{
 							child:Column(
 								children:[
 									Expanded(
-										flex:2,
+										flex:4,
 										child:ScopedModelDescendant<Resposta>(
 											builder:(context,child,model){
 												return Container(
