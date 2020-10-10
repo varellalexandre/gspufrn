@@ -12,7 +12,14 @@ PreferredSizeWidget NavBar(){
 		iconTheme: IconThemeData(color:theme.secundary),
 		backgroundColor:theme.background,
 		actions:[
+			Image(image:AssetImage('images/dep.png')),
+			Container(
+				width: 15
+			),
 			Image(image:AssetImage('images/ufrn.png')),
+			Container(
+				width: 15
+			),
 		]
 	);
 }

@@ -126,6 +126,43 @@ class Linha extends Model{
 		return true;
 	}
 
+
+	List orderDependencies(){
+		List depList = List();
+		List b = List();
+		Map<String,List> a = Map();
+		List<Job> disponiveis = List();
+		this.atividades.keys.forEach((id){
+			if(this.dependencies.keys.contains(id)){
+				a[id] = List.from(this.dependencies[id]);
+			}else{
+				b.add(id);
+			}
+		});
+
+		while(a.keys.length > 0){
+			for(String b_id in b){
+				for(String a_id in a.keys){
+					if(a[a_id].contains(b_id)){
+						a[a_id].remove(b_id);
+					}
+				}
+			}
+			depList.add(List.from(b));
+			b = List();
+			for(String a_id in a.keys){
+				if(a[a_id].length == 0){
+					b.add(a_id);
+				}
+			}
+			for(String b_id in b){
+				a.remove(b_id);
+			}
+		}
+
+		return depList;
+	}
+
 	Resposta calculateComsoal(){
 		if(this.qtd_pecas == 0 || this.qtd_pecas == null){
 			return null;

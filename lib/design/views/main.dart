@@ -4,6 +4,7 @@ import 'package:gspufrn/models/group.dart';
 import 'package:gspufrn/models/resposta.dart';
 import 'package:gspufrn/design/field/draggroup.dart';
 import 'package:gspufrn/design/field/answer_dialog.dart';
+import 'package:gspufrn/design/field/map_dialog.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 //draggable
@@ -30,6 +31,23 @@ class Main extends StatelessWidget{
 									Expanded(
 										flex:13,
 										child:Container()
+									),
+									Expanded(
+										flex:1,
+										child:FittedBox(
+											fit:BoxFit.scaleDown,
+											child:IconButton(
+												icon:Icon(Icons.map_outlined),
+												onPressed: (){
+													showDialog(
+														context:context,
+														builder:(_)=>mapdialog(
+															problem_info:this.problem_info
+														)
+													);
+												}
+											)
+										)
 									),
 									Expanded(
 										flex:1,

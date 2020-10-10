@@ -28,4 +28,5 @@ flutter:
   uses-material-design: true
   assets:
     - images/ufrn.png
+    - images/dep.png
 
