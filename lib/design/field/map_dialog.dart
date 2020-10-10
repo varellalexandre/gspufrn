@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gspufrn/models/job.dart';
+import 'package:zoom_widget/zoom_widget.dart';
 
 
 class mapdialog extends StatelessWidget{
@@ -18,7 +19,7 @@ class mapdialog extends StatelessWidget{
 						child:Text('Mapa das Atividades'),
 					),
 					Expanded(
-						flex:10,
+						flex:7,
 						child:Container(),
 					),
 					Expanded(
@@ -36,8 +37,17 @@ class mapdialog extends StatelessWidget{
 				]
 			),
 			titlePadding:EdgeInsets.all(10.0),
-			content:
+			content:Container(
+				width:0.8*(MediaQuery.of(context).size.width),
+				height:0.8*(MediaQuery.of(context).size.height),
+				child:Zoom(
+				    width: 1000,
+				    height: 1000,
+				    child:Text('hi')
+				)
+			),
 		);
 	}
 
 }
+//https://pub.dev/packages/graphite

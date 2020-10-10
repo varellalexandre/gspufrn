@@ -128,39 +128,24 @@ class Linha extends Model{
 
 
 	List orderDependencies(){
-		List depList = List();
-		List b = List();
-		Map<String,List> a = Map();
-		List<Job> disponiveis = List();
-		this.atividades.keys.forEach((id){
-			if(this.dependencies.keys.contains(id)){
-				a[id] = List.from(this.dependencies[id]);
-			}else{
-				b.add(id);
-			}
-		});
-
-		while(a.keys.length > 0){
-			for(String b_id in b){
-				for(String a_id in a.keys){
-					if(a[a_id].contains(b_id)){
-						a[a_id].remove(b_id);
-					}
-				}
-			}
-			depList.add(List.from(b));
-			b = List();
-			for(String a_id in a.keys){
-				if(a[a_id].length == 0){
-					b.add(a_id);
-				}
-			}
-			for(String b_id in b){
-				a.remove(b_id);
+		Map aux_map = Map();
+		for(String key in this.atividades.keys){
+			if(!aux_map.keys.contains(key)){
+				aux_map[key] = Map();
+				aux_map[key]['next'] = List();
+				aux_map[key]['id'] = this.atividades[key].nome;
 			}
 		}
-
-		return depList;
+		for(String key in this.dependencies.keys){
+			for(String dependent in this.dependencies[key]){
+				aux_map[dependent]['next'].add(
+					this.atividades[key].nome
+				);
+			}
+		}
+		List depCont = List();
+		aux_map.forEach((key,value)=>depCont.add(value));
+		return depCont;
 	}
 
 	Resposta calculateComsoal(){
