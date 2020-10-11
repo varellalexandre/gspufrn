@@ -18,6 +18,7 @@ dependencies:
   chips_choice: ">=1.2.0"
   random_color: ">=1.0.5"
   font_awesome_flutter: ">=8.8.1"
+  graphite: ">=0.2.0"
 
 dev_dependencies:
   flutter_test:
@@ -29,4 +30,4 @@ flutter:
   assets:
     - images/ufrn.png
     - images/dep.png
-
+    - tutor/2020-6.json

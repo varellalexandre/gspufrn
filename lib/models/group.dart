@@ -29,6 +29,6 @@ class Group extends Model{
 		jobs.forEach((job){
 			total = total + job.tempo;
 		});
-		return total;
+		return num.parse(total.toStringAsFixed(2));
 	}
 }

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gspufrn/models/job.dart';
 import 'package:zoom_widget/zoom_widget.dart';
+import 'package:graphite/core/matrix.dart';
+import 'package:graphite/core/typings.dart';
+import 'package:graphite/graphite.dart';
+import 'dart:convert';
 
 
 class mapdialog extends StatelessWidget{
@@ -10,7 +14,6 @@ class mapdialog extends StatelessWidget{
 
 	Widget build(BuildContext context){
 		List dep = this.problem_info.orderDependencies();
-		print(dep);
 		return AlertDialog(
 			title:Row(
 				children:[
@@ -40,10 +43,12 @@ class mapdialog extends StatelessWidget{
 			content:Container(
 				width:0.8*(MediaQuery.of(context).size.width),
 				height:0.8*(MediaQuery.of(context).size.height),
-				child:Zoom(
-				    width: 1000,
-				    height: 1000,
-				    child:Text('hi')
+				child:DirectGraph(
+					list:nodeInputFromJson(json.encode(dep)),
+					cellWidth:200,
+					cellPadding:10,
+        			contactEdgesDistance: 10.0,
+					orientation:MatrixOrientation.Horizontal,
 				)
 			),
 		);

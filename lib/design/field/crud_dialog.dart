@@ -55,16 +55,26 @@ class crudDialog extends StatelessWidget{
 		return AlertDialog(
 			title:Row(
 				children:[
-					Align(
-						alignment:Alignment.centerRight,
-						child:IconButton(
-							icon:Icon(Icons.close),
-							onPressed: (){
-								Navigator.pop(context);
-							}
-						)
+					Expanded(
+						flex:2,
+						child:Text('Atividade'),
 					),
-					Text('Atividade'),
+					Expanded(
+						flex:7,
+						child:Container(),
+					),
+					Expanded(
+						flex:3,
+						child:Align(
+							alignment:Alignment.centerRight,
+							child:IconButton(
+								icon:Icon(Icons.close),
+								onPressed: (){
+									Navigator.pop(context);
+								}
+							)
+						),
+					),
 				]
 			),
 			titlePadding:EdgeInsets.all(10.0),

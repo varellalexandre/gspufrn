@@ -6,7 +6,7 @@ void main() {
   runApp(
     MaterialApp(
       title:'GSPUFRN',
-      initialRoute:'/home',
+      initialRoute:'/comsoal',
       routes:routes,
       theme:theme.theme_data,
     )
