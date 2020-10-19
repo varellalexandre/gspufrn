@@ -19,6 +19,8 @@ dependencies:
   random_color: ">=1.0.5"
   font_awesome_flutter: ">=8.8.1"
   graphite: ">=0.2.0"
+  url_launcher: ">=5.1.4"
+  url_launcher_web: ">=0.1.0"
 
 dev_dependencies:
   flutter_test:

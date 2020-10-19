@@ -1,17 +1,18 @@
 import 'package:scoped_model/scoped_model.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 
 class Tutor extends Model{
-	String linkedin;
+	String contato;
 	String nome;
 	String descricao;
 	String email;
 	String linkfoto;
 
 	Tutor({
-		this.linkedin,
+		this.contato,
 		this.nome,
 		this.descricao,
 		this.email,
@@ -19,7 +20,7 @@ class Tutor extends Model{
 	});
 
 	void updateTutor(Map tutor){
-		this.linkedin = tutor['linkedin'];
+		this.contato = tutor['contato'];
 		this.nome = tutor['nome'];
 		this.descricao = tutor['descricao'];
 		this.email = tutor['email'];
@@ -38,8 +39,40 @@ class Tutor extends Model{
 					}
 					return Card(
 						child:ListTile(
+							contentPadding:EdgeInsets.all(20),
 							leading:pic,
-							title:Text(this.nome)
+							title:Text(this.nome),
+							subtitle:Container(
+								child:Column(
+									crossAxisAlignment:CrossAxisAlignment.start,
+									children:[
+										FittedBox(
+											fit:BoxFit.scaleDown,
+											alignment:Alignment.centerLeft,
+											child:Text(this.email),
+										),
+										FittedBox(
+											fit:BoxFit.scaleDown,
+											alignment:Alignment.centerLeft,
+											child:Text(this.descricao),
+										),
+										FittedBox(
+											fit:BoxFit.scaleDown,
+											alignment:Alignment.bottomLeft,
+											child:IconButton(
+												icon:FaIcon(FontAwesomeIcons.envelope),
+												onPressed:()async {
+													if(await canLaunch(this.contato)){
+														await launch(this.contato);
+													}else{
+														throw 'Não foi possível abrir a página';
+													}
+												}
+											)
+										),
+									]
+								)
+							)
 						)
 					);
 				}
@@ -68,9 +101,10 @@ class Tutoria extends Model{
 
 	void updateTutoria(Map tutoria){
 		this.orientadora = Tutor(
-			linkedin:tutoria['orientadora']['linkedin'],
+			contato:tutoria['orientadora']['contato'],
 			nome:tutoria['orientadora']['nome'],
 			email:tutoria['orientadora']['email'],
+			descricao:'Professora Orientadora',
 			linkfoto:tutoria['orientadora']['linkfoto'],
 		);
 		notifyListeners();
@@ -84,23 +118,34 @@ class Tutoria extends Model{
 					if(this.orientadora == null){
 						return Container();
 					}
-					return ListView(
+					return Row(
+						children:[
+							Expanded(
+								flex:3,
+								child:Container(),
+							),
+							Expanded(
+								flex:10,
+								child:ListView(
 						children:[
 							Container(
-								padding:EdgeInsets.all(20),
 								child:model.orientadora.widgetTutor(),
 							),
 							Container(
-								padding:EdgeInsets.all(20),
 								child:model.orientadora.widgetTutor(),
 							),
 							Container(
-								padding:EdgeInsets.all(20),
 								child:model.orientadora.widgetTutor(),
 							),
 							Container(
-								padding:EdgeInsets.all(20),
 								child:model.orientadora.widgetTutor(),
+							)
+						]
+								)
+							),
+							Expanded(
+								flex:3,
+								child:Container()
 							)
 						]
 					);

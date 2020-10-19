@@ -24,10 +24,6 @@ class Aboutus extends StatelessWidget{
 				child:Column(
 					children:[
 						Expanded(
-							flex:4,
-							child:Container(),
-						),
-						Expanded(
 							flex:10,
 							child:atual.widgettutoria(),
 						),
