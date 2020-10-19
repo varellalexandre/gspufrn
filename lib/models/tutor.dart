@@ -2,6 +2,7 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 
 
 class Tutor extends Model{
@@ -60,12 +61,14 @@ class Tutor extends Model{
 											fit:BoxFit.scaleDown,
 											alignment:Alignment.bottomLeft,
 											child:IconButton(
-												icon:FaIcon(FontAwesomeIcons.envelope),
+												icon:FaIcon(FontAwesomeIcons.link),
 												onPressed:()async {
-													if(await canLaunch(this.contato)){
-														await launch(this.contato);
-													}else{
-														throw 'Não foi possível abrir a página';
+													if(this.contato != null){
+														if(await canLaunch(this.contato)){
+															await launch(this.contato);
+														}else{
+															throw 'Não foi possível abrir a página';
+														}
 													}
 												}
 											)
@@ -84,10 +87,12 @@ class Tutor extends Model{
 
 class Tutoria extends Model{
 	List <Tutor> tutores;
-	String periodo;
 	Tutor orientadora;
+	String about;
 
-	Tutoria();
+	Tutoria(){
+		this.tutores = List();
+	}
 
 	void updateOrientadora(Tutor orientadora){
 		this.orientadora = orientadora;
@@ -100,6 +105,10 @@ class Tutoria extends Model{
 	}
 
 	void updateTutoria(Map tutoria){
+		this.about = "";
+		tutoria['sobre'].forEach((texto){
+			this.about += texto;
+		});
 		this.orientadora = Tutor(
 			contato:tutoria['orientadora']['contato'],
 			nome:tutoria['orientadora']['nome'],
@@ -107,6 +116,17 @@ class Tutoria extends Model{
 			descricao:'Professora Orientadora',
 			linkfoto:tutoria['orientadora']['linkfoto'],
 		);
+		for(String tutor in tutoria['tutores'].keys){
+			addTutor(
+				Tutor(
+					contato:tutoria['tutores'][tutor]['contato'],
+					nome:tutoria['tutores'][tutor]['nome'],
+					email:tutoria['tutores'][tutor]['email'],
+					descricao:'Tutor',
+					linkfoto:tutoria['tutores'][tutor]['linkfoto'],
+				)
+			);
+		}
 		notifyListeners();
 	}
 
@@ -118,35 +138,51 @@ class Tutoria extends Model{
 					if(this.orientadora == null){
 						return Container();
 					}
+					List<Widget> widget_tutores = List<Widget>();
+					this.tutores.forEach((tutor){
+						widget_tutores.add(
+							Container(
+								child:tutor.widgetTutor()
+							)
+						);
+					});
 					return Row(
 						children:[
 							Expanded(
-								flex:3,
-								child:Container(),
+								flex:5,
+								child:Container(
+									child:Markdown(
+										data:this.about,
+									),
+								),
 							),
 							Expanded(
 								flex:10,
-								child:ListView(
-						children:[
-							Container(
-								child:model.orientadora.widgetTutor(),
-							),
-							Container(
-								child:model.orientadora.widgetTutor(),
-							),
-							Container(
-								child:model.orientadora.widgetTutor(),
-							),
-							Container(
-								child:model.orientadora.widgetTutor(),
-							)
-						]
+								child:Column(
+									children:[
+										Expanded(
+											flex:2,
+											child:Markdown(
+												data:"# Quem são os participantes?"
+											)
+										),
+										Expanded(
+											flex:3,
+											child:Container(
+												child:model.orientadora.widgetTutor(),
+											),
+										),
+										Expanded(
+											flex:7,
+											child:Container(
+												child:ListView(
+													children:widget_tutores,
+												)
+											)
+										)
+									]
 								)
 							),
-							Expanded(
-								flex:3,
-								child:Container()
-							)
 						]
 					);
 				}

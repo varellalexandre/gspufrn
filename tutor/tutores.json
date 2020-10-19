@@ -1,16 +1,27 @@
 {
 	"periodo":"2020.6",
+	"sobre":[
+		"# Tutoria GSP3\n\n",
+		"## Sobre a tutoria\n\n",
+		"A tutoria de GSP3 visa trazer para sala de aula (por enquanto virtual) ",
+		"dinamicas e materiais interativos com intuito de aulas mais ativas, ",
+		"utilizando de metodologias participativas.\n\n",
+		"Nesse período de pandemia é importante saber se adaptar as tecnologias ",
+		"disponíveis para melhor proveito das aulas. Então é fundamental a ",
+		"participação mutua, para aprendermos mais a eficácia e eficiência dessas ",
+		" tecnologias.\n\n"
+	],
 	"tutores":{
 		"alexandre":{
 			"nome":"Alexandre Guilherme",
-			"contato":null,
+			"contato":"https://www.linkedin.com/in/alexandre-varella-93b6b8140/",
 			"email":"varellalexandre@gmail.com",
 			"linkfoto":"https://scontent.fnat2-1.fna.fbcdn.net/v/t1.0-9/44932380_1897647920325959_2992166237515022336_n.jpg?_nc_cat=110&_nc_sid=09cbfe&_nc_eui2=AeHB7f3XhTQXa-sM-Do9Zr_buoECDqLa1L-6gQIOotrUv4Cs5PlV6AejahKUjIbVH83P08GXu34mu5YaL67K3YQU&_nc_ohc=w0ZaT9KaVG4AX_oDarl&_nc_ht=scontent.fnat2-1.fna&oh=54a7ce0c9152ee830138e5513e6a451b&oe=5FA78EDA"
 		},
 		"tancredo":{
 			"nome":"Tancredo Regis",
 			"contato":null,
-			"email":null,
+			"email":"tancredo.regis@gmail.com",
 			"linkfoto":null
 		}
 	},
@@ -18,6 +29,6 @@
 		"nome":"Sandra Rufino Santos",
 		"contato":"https://sigaa.ufrn.br/sigaa/public/docente/portal.jsf?siape=2736085",
 		"email":"ssrufino@yahoo.com.br",
-		"linkfoto":"https://arquivos.info.ufrn.br/arquivos/2012195052eee91065552022abc69a439/Sandra_face4.jpg"
+		"linkfoto":null
 	}
 }

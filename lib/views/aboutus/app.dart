@@ -19,7 +19,7 @@ class Aboutus extends StatelessWidget{
 			}
 		);
 		return Scaffold(
-			appBar:NavBar(),
+			appBar:NavBar(context),
 			body:Container(
 				child:Column(
 					children:[

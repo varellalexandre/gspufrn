@@ -4,7 +4,7 @@ import 'package:gspufrn/views/aboutus/app.dart';
 
 final _routes = {
 	'/comsoal':(context)=>SafeArea(child:Comsoal()),
-	'/main':(context)=>SafeArea(child:Aboutus())
+	'/sobre':(context)=>SafeArea(child:Aboutus())
 };
 
 get routes => _routes;

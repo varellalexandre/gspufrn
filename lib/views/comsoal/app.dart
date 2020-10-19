@@ -19,7 +19,7 @@ class Comsoal extends StatelessWidget{
 	@override
 	Widget build(BuildContext context){
 		return Scaffold(
-			appBar:NavBar(),
+			appBar:NavBar(context),
 			drawer:sidebar(model:linha_model),
 			body:Container(
 				child:ScopedModel<Linha>(
