@@ -11,11 +11,11 @@ class Aboutus extends StatelessWidget{
 	Widget build(BuildContext context){
 		Tutoria atual = Tutoria();
 		DefaultAssetBundle.of(context)
-		.loadString('tutor/2020-6.json')
+		.loadString('tutor/tutores.json')
 		.then(
 			(resp){
 				atual.updateTutoria(json.decode(resp));
-				
+
 			}
 		);
 		return Scaffold(
@@ -30,7 +30,7 @@ class Aboutus extends StatelessWidget{
 						Expanded(
 							flex:10,
 							child:atual.widgettutoria(),
-						),	
+						),
 					]
 				),
 			)

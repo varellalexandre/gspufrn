@@ -30,4 +30,4 @@ flutter:
   assets:
     - images/ufrn.png
     - images/dep.png
-    - tutor/2020-6.json
+    - tutor/tutores.json

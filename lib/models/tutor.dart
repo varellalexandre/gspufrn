@@ -1,5 +1,7 @@
 import 'package:scoped_model/scoped_model.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 
 class Tutor extends Model{
 	String linkedin;
@@ -22,6 +24,27 @@ class Tutor extends Model{
 		this.descricao = tutor['descricao'];
 		this.email = tutor['email'];
 		this.linkfoto = tutor['linkfoto'];
+	}
+	Widget widgetTutor(){
+		return ScopedModel<Tutor>(
+			model:this,
+			child:ScopedModelDescendant<Tutor>(
+				builder:(context,child,model){
+					Widget pic;
+					if(this.linkfoto != null){
+						pic = Image.network(this.linkfoto);
+					}else{
+						pic = FaIcon(FontAwesomeIcons.user);
+					}
+					return Card(
+						child:ListTile(
+							leading:pic,
+							title:Text(this.nome)
+						)
+					);
+				}
+			)
+		);
 	}
 
 }
@@ -61,13 +84,24 @@ class Tutoria extends Model{
 					if(this.orientadora == null){
 						return Container();
 					}
-					return Column(
+					return ListView(
 						children:[
-							Expanded(
-								flex:4,
-								child:Text(model.orientadora.nome),
+							Container(
+								padding:EdgeInsets.all(20),
+								child:model.orientadora.widgetTutor(),
+							),
+							Container(
+								padding:EdgeInsets.all(20),
+								child:model.orientadora.widgetTutor(),
+							),
+							Container(
+								padding:EdgeInsets.all(20),
+								child:model.orientadora.widgetTutor(),
+							),
+							Container(
+								padding:EdgeInsets.all(20),
+								child:model.orientadora.widgetTutor(),
 							)
-
 						]
 					);
 				}
