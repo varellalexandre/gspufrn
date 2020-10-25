@@ -6,6 +6,7 @@ import 'dart:core';
 import 'dart:math';
 import 'dart:convert';
 
+
 class Job extends Model{
 	String id_atv;
 	num tempo;
@@ -28,7 +29,7 @@ class Job extends Model{
 	}){
 		DateTime now = DateTime.now();
 		var bytes = utf8.encode("${now}-${nome}");
-		this.id_atv = "${md5.convert(bytes)}"; 
+		this.id_atv = "${md5.convert(bytes)}";
 	}
 }
 
@@ -107,10 +108,10 @@ class Linha extends Model{
 		}
 		for(String atividade in this.atividades.keys){
 			if(this.atividades[atividade].nome == dependent){
-				dependent_key = this.atividades[atividade].id_atv;				
+				dependent_key = this.atividades[atividade].id_atv;
 			}
 			if(this.atividades[atividade].nome == origin){
-				origin_key = this.atividades[atividade].id_atv;	
+				origin_key = this.atividades[atividade].id_atv;
 			}
 		}
 		if(origin == null || dependent == null){
@@ -173,10 +174,10 @@ class Linha extends Model{
 					b.add(id);
 				}
 			});
-			
+
 			Resposta resolucao = Resposta(jobs:disponiveis);
 			resolucao.groups.add(Group());
-			
+
 			while(a.keys.length > 0){
 				while(b.length > 0){
 					Random new_rand = Random();
@@ -190,7 +191,7 @@ class Linha extends Model{
 					}else if((estagio.totalTime()+actual.tempo) > this.takt_time){
 						Group new_group = Group();
 						new_group.addJob(actual);
-						resolucao.groups.add(new_group);					
+						resolucao.groups.add(new_group);
 					}else{
 						estagio.addJob(actual);
 					}
@@ -211,7 +212,7 @@ class Linha extends Model{
 			if(retorno == null){
 				retorno = resolucao;
 			}else if(
-				(retorno.eff(this.takt_time) <= resolucao.eff(this.takt_time)) 
+				(retorno.eff(this.takt_time) <= resolucao.eff(this.takt_time))
 			){
 				retorno = resolucao;
 			}
@@ -224,7 +225,7 @@ class Linha extends Model{
 
 }
 
-Linha get_example(){
+Linha exemplo_sandra(){
 	List<Job> atividades = [
 		Job(
 			nome:'Atividade 1',
@@ -288,4 +289,75 @@ Linha get_example(){
 		linha.addDependence(dependence[0],dependence[1]);
 	}
 	return linha;
+}
+Linha exemplo_arcus(){
+	List<Job> atividades = [
+		Job(
+			nome:'Atividade a',
+			tempo:3
+		),
+		Job(
+			nome:'Atividade b',
+			tempo:6
+		),
+		Job(
+			nome:'Atividade c',
+			tempo:7
+		),
+		Job(
+			nome:'Atividade d',
+			tempo:5
+		),
+		Job(
+			nome:'Atividade e',
+			tempo:2
+		),
+		Job(
+			nome:'Atividade f',
+			tempo:4
+		),
+		Job(
+			nome:'Atividade g',
+			tempo:5
+		),
+		Job(
+			nome:'Atividade h',
+			tempo:5
+		),
+	];
+
+	List dependencies = [
+		['Atividade a','Atividade b'],
+		['Atividade a','Atividade c'],
+		['Atividade a','Atividade d'],
+		['Atividade a','Atividade e'],
+		['Atividade b','Atividade f'],
+		['Atividade c','Atividade f'],
+		['Atividade c','Atividade g'],
+		['Atividade d','Atividade g'],
+		['Atividade f','Atividade h'],
+		['Atividade g','Atividade h'],
+	];
+
+	Linha linha = Linha(
+		atividades,
+		horas_disp:1000,
+		qtd_pecas:100,
+	);
+
+	for(List dependence in dependencies){
+		linha.addDependence(dependence[0],dependence[1]);
+	}
+	return linha;
+}
+
+
+Linha get_example(){
+	List funcs = [
+		exemplo_sandra,
+		exemplo_arcus,
+	];
+	Random rnd = Random();
+	int pos = rnd.nextInt(funcs.length);
+	return funcs[pos]();
 }

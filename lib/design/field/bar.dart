@@ -22,40 +22,11 @@ PreferredSizeWidget NavBar(BuildContext context){
 		iconTheme: IconThemeData(color:theme.secundary),
 		backgroundColor:theme.background,
 		actions:[
-			Tooltip(
-				message:'Sobre a tutoria',
-				child:redirect(
-					path:'/sobre',
-					child:FaIcon(FontAwesomeIcons.users),
-					context:context,
-				)
-			),
-			Tooltip(
-				message:'Software antigo',
-				child:FlatButton(
-					child:FaIcon(FontAwesomeIcons.externalLinkAlt),
-					textColor:Color(0xFFFFFFFF),
-					color:Colors.transparent,
-					onPressed:()async {
-						if(await canLaunch('https://gspufrn.github.io/')){
-							await launch('https://gspufrn.github.io/');
-						}else{
-							throw 'Não foi possível abrir a página';
-						}
-					}
-				)
-			),
-			Container(
-				width:15,
-			),
+			Container(width:10),
 			Image(image:AssetImage('images/dep.png')),
-			Container(
-				width: 15
-			),
+			Container(width:10),
 			Image(image:AssetImage('images/ufrn.png')),
-			Container(
-				width: 15
-			),
+			Container(width:10),
 		]
 	);
 }
