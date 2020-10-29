@@ -351,12 +351,82 @@ Linha exemplo_arcus(){
 	return linha;
 }
 
+Linha random_line(){
+	Random rnd = Random();
+	double horas_disp = rnd.nextInt(480)*rnd.nextDouble();
+	int qtd_pecas = rnd.nextInt(1000);
+	double takt = horas_disp/qtd_pecas;
+	int qtd_atvt = 5+rnd.nextInt(10);
+	print(takt);
+	print(horas_disp);
+	print(qtd_pecas);
+	print(qtd_atvt);
+	List<Job> atividades = [
+		Job(
+			nome:'Atividade a',
+			tempo:3
+		),
+		Job(
+			nome:'Atividade b',
+			tempo:6
+		),
+		Job(
+			nome:'Atividade c',
+			tempo:7
+		),
+		Job(
+			nome:'Atividade d',
+			tempo:5
+		),
+		Job(
+			nome:'Atividade e',
+			tempo:2
+		),
+		Job(
+			nome:'Atividade f',
+			tempo:4
+		),
+		Job(
+			nome:'Atividade g',
+			tempo:5
+		),
+		Job(
+			nome:'Atividade h',
+			tempo:5
+		),
+	];
+
+	List dependencies = [
+		['Atividade a','Atividade b'],
+		['Atividade a','Atividade c'],
+		['Atividade a','Atividade d'],
+		['Atividade a','Atividade e'],
+		['Atividade b','Atividade f'],
+		['Atividade c','Atividade f'],
+		['Atividade c','Atividade g'],
+		['Atividade d','Atividade g'],
+		['Atividade f','Atividade h'],
+		['Atividade g','Atividade h'],
+	];
+
+	Linha linha = Linha(
+		atividades,
+		horas_disp:1000,
+		qtd_pecas:100,
+	);
+
+	for(List dependence in dependencies){
+		linha.addDependence(dependence[0],dependence[1]);
+	}
+	return linha;
+}
 
 Linha get_example(){
 	List funcs = [
 		exemplo_sandra,
 		exemplo_arcus,
 	];
+	random_line();
 	Random rnd = Random();
 	int pos = rnd.nextInt(funcs.length);
 	return funcs[pos]();
