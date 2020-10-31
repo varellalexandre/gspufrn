@@ -354,18 +354,20 @@ Linha exemplo_arcus(){
 double exp_random(int scale){
 	Random rnd = Random();
 	double x = scale*rnd.nextDouble();
-	return 1-(1/scale)*exp(-x/scale);
+	return (1/scale)*exp(-x/scale);
 }
 
 Linha random_line(){
 	Random rnd = Random();
-	double horas_disp = rnd.nextInt(480)*rnd.nextDouble();
-	int qtd_pecas = rnd.nextInt(1000);
+	double horas_disp = rnd.nextInt(720)*rnd.nextDouble();
+	int qtd_pecas = rnd.nextInt(10000);
 	double takt = horas_disp/qtd_pecas;
 	int qtd_atvt = 5+rnd.nextInt(10);
 	List<Job> atividades = List();
+ 	Map dependencies = Map();
 	for(int count = 0; count <= qtd_atvt; count++){
-		double rnd_time = takt*exp_random(1);
+		double rnd_time = takt*(1-exp_random(1));
+		dependencies['Atividade '+(count+1).toString()] = List();
 		atividades.add(
 			Job(
 				nome:'Atividade '+(count+1).toString(),
@@ -376,16 +378,40 @@ Linha random_line(){
 		if(count > 0){
 			int range = ((count)*exp_random(1)).round();
 			qtd_anteriores = rnd.nextInt(range+1)+1;
+			for(int ant = 0; ant<=qtd_anteriores; ant++){
+				int depends = rnd.nextInt(count);
+				while(!
+					(
+						dependencies['Atividade '+(count+1).toString()].contains(depends)
+					)
+				){
+					dependencies['Atividade '+(count+1).toString()].add(depends);
+				}
+			}
 		}
-		print(atividades[count].nome);
-		print(qtd_anteriores);
 	}
 	Linha generated_line = Linha(
 		atividades,
 		horas_disp:horas_disp,
 		qtd_pecas:qtd_pecas,
 	);
-
+	for(int count = dependencies.keys.length-1; count>=0; count--){
+		String actual = dependencies.keys.elementAt(count);
+		for(int dep in dependencies[actual]){
+			bool has_another = false;
+			for(int contained in dependencies[actual]){
+				String dep_name = 'Atividade '+(contained+1).toString();
+				if(dependencies[dep_name].contains(dep)){
+					has_another = true;
+				}
+			}
+			if(!has_another){
+				String dep_name = 'Atividade '+(dep+1).toString();
+				generated_line.addDependence(dep_name,actual);
+			}
+		}
+	}
+	return generated_line;
 }
 
 Linha get_example(){
@@ -393,7 +419,9 @@ Linha get_example(){
 		exemplo_sandra,
 		exemplo_arcus,
 	];
-	random_line();
+	funcs = [
+		random_line
+	];
 	Random rnd = Random();
 	int pos = rnd.nextInt(funcs.length);
 	return funcs[pos]();
