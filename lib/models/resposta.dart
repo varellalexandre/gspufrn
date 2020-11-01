@@ -8,6 +8,14 @@ class Resposta extends Model{
 	Group all_jobs;
 	List<Group> groups;
 
+	Map readable(){
+		Map groups_map = Map();
+		for(int i = 0; i<groups.length; i++){
+			groups_map['Estágio '+(i+1).toString()] = groups[i].group_elements();
+		}
+		return groups_map;
+	}
+
 	num eff(num takt){
 		num tempo_total = 0;
 		groups.forEach((group){
