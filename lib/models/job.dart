@@ -416,11 +416,9 @@ Linha random_line(){
 
 Linha get_example(){
 	List funcs = [
-		exemplo_sandra,
+		random_line,
 		exemplo_arcus,
-	];
-	funcs = [
-		random_line
+		exemplo_sandra
 	];
 	Random rnd = Random();
 	int pos = rnd.nextInt(funcs.length);
