@@ -2,6 +2,44 @@
 
 Projeto de gameficação do sequenciamento da linha de produção, foi desenvolvido em flutter para facilitar o acesso em qualquer local.
 
+## Software para sequenciamento das linhas
+
+O software foi desenvolvido para aprender e avaliar a forma como foi realizado o sequenciamento das linhas de produção. Ele é disposto de forma similar a um jogo, onde aparece um problema para ser solucionado, com atividades, quantidade de peças e tempo. E a partir disso o usuário deve alocar as atividades no estágio correto.
+
+Para acessar o software basta entrar no [link](http://gspufrn.s3-website-sa-east-1.amazonaws.com/#/comsoal) e realizar o sequenciamento. Nele são colocados dois problemas fixos, o primeiro é o disponível no slide da professora, o segundo é o disponível no artigo em que o COMSOAL foi proposto e o terceiro é utilizado uma heurística para gerar as linhas de forma randômica.
+
+
+
+## Gerando Linhas de Produção randômicas
+
+
+
+### Passos utilizados
+
+1. Gera quantidade de Horas disponíveis de forma randômica
+
+2. Gera quantidade de Peças a ser produzida de forma randômica
+
+3. Calcula o tempo Takt
+
+   1. Quantidade de horas disponíveis dividido pela quantidade de peças a serem produzidas
+
+4. Gera quantidade de atividades de forma randômica
+
+   1. O número de atividades da linha será gerado de forma randômica, utilizando um inteiro randômico
+   2. As atividades são geradas de forma randômica, onde o tempo de cada uma é gerado para ser inferior ao tempo takt.
+
+5. Para cada atividade define de forma randômica quantas dependências essa deve possuir
+
+   1. A primeira atividade não deve possuir dependências
+   2. Cada atividade posterior a primeira deve ter uma quantidade de dependências variando entre 1 e o número de atividades já alocadas.
+
+6. Limpeza das anteriores 
+
+   1. Algumas atividades vão ter redundância em dependência, por exemplo a atividade 9 depende da 4 e da 2, porém a 4 já depende da 2. Então é necessário limpar a redundânicia.
+
+      
+
 ## Problema de sequenciamento
 
 ### Introdução
@@ -25,7 +63,7 @@ Para verificar a adequação, o programa utilizaria o COMSOAL para encontrar uma
 Como definido o programa foi desenvolvido no framework Flutter, e hospedado na AWS temporariamente, posteriormente será transferido para o github para hospedagem por ofertar maior praticidade. Devido o formato de execução do programa ser interpretado pelo navegador, isso implica que o código é um arquivo estático o que retira a necessidade de um servidor para disponibilização do software, existindo possibilidades de hospedagem sem custo.
 
 Seguindo o fluxo apresentado nos métodos são apresentados a seguir o as telas para um exemplo simples de sequenciamento da linha de produção com o programa desenvolvido.
-  
+
 ### Conclusão
 
 O software desenvolvido permite que os alunos da disciplina Gestão de Sistemas de Produção III aprendam de forma interativa o sequenciamento das atividades do arranjo físico de linha. Além disso é possível utilizar o software de forma gratuita para validar o sequenciamento em empresas reais.
@@ -41,5 +79,3 @@ ARCUS, ALBERT L. A COMPUTER METHOD OF SEQUENCING OPERATIONS FOR ASSEMBLY LINES. 
 7090 Data Processing System. IBM Data Processing Division, 4 out. 1960. Disponível em: https://www.ibm.com/ibm/history/exhibits/mainframe/mainframe_PP7090.html. Acesso em: 10 out. 2020.
 
 Flutter Release Preview 2. Google Developers, 19 set. 2018 . Disponível em: https://www.youtube.com/watch?v=_LfjILXswJs&list=PLOU2XLYxmsIJ7dsVN4iRuA7BT8XHzGtCr&index=6. Acesso em: 10 out. 2020.
-
-
